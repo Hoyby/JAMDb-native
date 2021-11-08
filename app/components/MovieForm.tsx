@@ -98,7 +98,7 @@ export default function MovieForm() {
                                 <h3 style={tailwind('text-black text-3xl')}>Add new movie</h3>
                                 <button
                                     style={tailwind(
-                                        'p-1 ml-auto bg-transparent border-0 text-black float-right text-2xl outline-none focus:outline-none',
+                                        'p-1  bg-transparent border-0 text-black float-right text-2xl outline-none focus:outline-none',
                                     )}
                                     onClick={() => setshowCreateMovieForm(false)}
                                 >

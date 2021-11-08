@@ -10,11 +10,9 @@ import tailwind from 'tailwind-rn'
 
 export function Layout({ children }: { children: ReactNode }) {
     return (
-        <View style={tailwind('h-full relative')}>
+        <View style={tailwind('h-full mt-8 relative')}>
             <NavBar />
-            <ScrollView style={tailwind('flex flex-col h-screen my-0 mx-auto px-10')}>
-                {children}
-            </ScrollView>
+            <ScrollView style={tailwind('flex flex-col  my-0  px-10')}>{children}</ScrollView>
             <Footer />
         </View>
     )

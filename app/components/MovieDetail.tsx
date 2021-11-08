@@ -52,12 +52,10 @@ export default function MovieDetail() {
             </ModalHeader>
 
             <ModalBody>
-                <p style={tailwind('text-base leading-relaxed text-gray-600 font-light mb-10')}>
+                <p style={tailwind('text-base  text-gray-600 font-light mb-10')}>
                     Released: {movie?.published}
                 </p>
-                <p style={tailwind('text-base leading-relaxed text-gray-600 font-normal')}>
-                    {movie?.description}
-                </p>
+                <p style={tailwind('text-base  text-gray-600 font-normal')}>{movie?.description}</p>
             </ModalBody>
 
             <ModalFooter>

@@ -16,17 +16,13 @@ export default function NavBar() {
 
     return (
         <>
-            <nav
-                style={tailwind('flex justify-start items-start shadow-lg py-1 px-5 bg-gray-700')}
+            <View
+                style={tailwind('flex justify-start items-start  py-1 px-5 bg-gray-700')}
                 data-testid="nav"
             >
                 <View style={tailwind('container flex items-center justify-between')}>
                     <View style={tailwind('w-full flex flex-row justify-between')}>
-                        <View
-                            style={tailwind(
-                                'text-sm font-bold leading-relaxed inline-block mr-4 whitespace-no-wrap text-white',
-                            )}
-                        >
+                        <View style={tailwind('text-sm font-bold   mr-4  text-white')}>
                             <Text style={tailwind('text-red-600 text-2xl')}>JAMDb</Text>
                             <Text style={tailwind('opacity-25 m-0 p-0 text-white')}>
                                 Just Another Movie Database
@@ -38,34 +34,34 @@ export default function NavBar() {
                                 openMenu == 'hidden' ? setOpenMenu('flex') : setOpenMenu('hidden')
                             }
                         >
-                            <span style={tailwind('relative w-6 h-px rounded-sm bg-white')}></span>
-                            <span
+                            <Text style={tailwind('relative w-6 h-px rounded-sm bg-white')}></Text>
+                            <Text
                                 style={tailwind('relative w-6 h-px rounded-sm bg-white mt-1')}
-                            ></span>
-                            <span
+                            ></Text>
+                            <Text
                                 style={tailwind('relative w-6 h-px rounded-sm bg-white mt-1')}
-                            ></span>
+                            ></Text>
                         </Pressable>
                     </View>
                     <View style={tailwind(`flex-grow items-center ${openMenu}`)}>
-                        <View style={tailwind('flex ml-auto flex-col items-center')}>
+                        <View style={tailwind('flex  flex-col items-center')}>
                             <Pressable
                                 style={tailwind(
-                                    'px-5 py-4 flex gap-1 text-xs uppercase font-medium leading text-white rounded-lg justify-start bg-gray-700',
+                                    'px-5 py-4 flex  text-xs uppercase font-medium  text-white rounded-lg justify-start bg-gray-700',
                                 )}
                             >
                                 <Text> Discover </Text>
                             </Pressable>
                             <Pressable
                                 style={tailwind(
-                                    'px-5 py-4 flex gap-1 text-xs uppercase font-medium leading text-white rounded-lg justify-start',
+                                    'px-5 py-4 flex  text-xs uppercase font-medium  text-white rounded-lg justify-start',
                                 )}
                             >
                                 <Text> Profile </Text>
                             </Pressable>
                             <Pressable
                                 style={tailwind(
-                                    'px-5 py-4 flex gap-1 text-xs uppercase font-medium leading text-white rounded-lg justify-start',
+                                    'px-5 py-4 flex  text-xs uppercase font-medium  text-white rounded-lg justify-start',
                                 )}
                             >
                                 <Text> Settings </Text>
@@ -79,7 +75,7 @@ export default function NavBar() {
                         </View>
                     </View>
                 </View>
-            </nav>
+            </View>
         </>
     )
 }

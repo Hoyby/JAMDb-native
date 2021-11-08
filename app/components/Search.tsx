@@ -206,7 +206,7 @@ export default function Search() {
                     <label
                         htmlFor="searchbar"
                         style={tailwind(
-                            'text-white absolute left-0 -top-1.5 w-full h-full border-gray-300 pointer-events-none false flex false leading-10',
+                            'text-white absolute left-0 -top-1.5 w-full h-full border-gray-300 pointer-events-none false flex false -10',
                         )}
                     >
                         Search Movies
@@ -355,7 +355,7 @@ export default function Search() {
                 {!pageState.hasNextPage && (
                     <Button
                         size="sm"
-                        style={tailwind('mx-auto')}
+                        style={tailwind('')}
                         ripple="light"
                         color="red"
                         onClick={() =>

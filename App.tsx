@@ -12,7 +12,10 @@ export default function App() {
     return (
         <Provider store={store}>
             {/* <ApolloProvider client={apolloClient}> */}
-            <Layout>{/* <Dashboard /> */}test</Layout>
+            <Layout>
+                {/* <Dashboard /> */}
+                <Text>test</Text>
+            </Layout>
             {/* </ApolloProvider> */}
         </Provider>
     )
