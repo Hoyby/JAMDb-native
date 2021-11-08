@@ -355,7 +355,7 @@ export default function Search() {
                 {!pageState.hasNextPage && (
                     <Button
                         size="sm"
-                        style={tailwind('')}
+                        style={tailwind('mx-auto')}
                         ripple="light"
                         color="red"
                         onClick={() =>
