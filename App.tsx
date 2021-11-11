@@ -11,12 +11,12 @@ import { store } from './app/store'
 export default function App() {
     return (
         <Provider store={store}>
-            {/* <ApolloProvider client={apolloClient}> */}
+            <ApolloProvider client={apolloClient}>
             <Layout>
-                {/* <Dashboard /> */}
+                <Dashboard />
                 <Text>test</Text>
             </Layout>
-            {/* </ApolloProvider> */}
+            </ApolloProvider>
         </Provider>
     )
 }

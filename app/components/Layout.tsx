@@ -21,7 +21,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <NavBar />
 
             <ScrollView style={tailwind('flex flex-col max-w-screen-xl my-0 px-10')}>
-                <View style={tailwind('flex-grow')}>{children}</View>
+                <ScrollView style={tailwind('flex-grow')}>{children}</ScrollView>
             </ScrollView>
 
             <Footer />

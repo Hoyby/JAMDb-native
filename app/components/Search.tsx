@@ -5,20 +5,8 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
-
-// material-tailwind is not officially supported by TS - hence the ignores
-/* eslint-disable */
-// @ts-ignore
-import Icon from '@material-tailwind/react/Icon'
-// @ts-ignore
-import Button from '@material-tailwind/react/Button'
-// @ts-ignore
-import Dropdown from '@material-tailwind/react/Dropdown'
-// @ts-ignore
-import DropdownLink from '@material-tailwind/react/DropdownLink'
-import { View } from 'react-native'
+import { View, Text, TextInput, Button, Pressable, ScrollView } from 'react-native'
 import tailwind from 'tailwind-rn'
-/* eslint-enable */
 
 // Redux dispatch
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -126,7 +114,7 @@ export default function Search() {
 
     let timer: NodeJS.Timeout
 
-    const handeSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handeSearchChange = (event:any) => {
         clearTimeout(timer)
         timer = setTimeout(() => {
             setSearchInput(event.target.value)
@@ -182,40 +170,29 @@ export default function Search() {
 
     return (
         <View style={tailwind('mb-40')}>
-            <form style={tailwind('my-10')} onSubmit={handleSubmit}>
+            <View style={tailwind('my-10')}>
                 {/* Search Bar */}
                 <View style={tailwind('w-full relative h-12')}>
-                    <span
-                        role="text"
-                        id="searchbar"
+                    <View
                         style={tailwind(
-                            'material-icons p-0 text-gray-600 text-opacity-60 border-none absolute top-1/2 right-3 transform -translate-y-1/2 text-xl',
+                            'p-0 text-gray-600 text-opacity-60 absolute top-1/2 right-3 text-xl',
                         )}
                     >
-                        search
-                    </span>
-                    <input
-                        type="text"
-                        name="searchbar"
-                        id="searchbar"
-                        onChange={handeSearchChange}
+                        <Text>search</Text>
+                    </View>
+                    <TextInput
+                        onChangeText={handeSearchChange}
                         style={tailwind(
-                            'w-full h-full text-gray-500 outline-none focus:text-white pl-3 pr-9 pt-3.5 pb-2.5 mt-input-outline bg-transparent border border-1 border-gray-300 rounded-lg focus:border-2',
+                            'w-full h-full text-gray-500 pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
                         )}
                     />
-                    <label
-                        htmlFor="searchbar"
-                        style={tailwind(
-                            'text-white absolute left-0 -top-1.5 w-full h-full border-gray-300 pointer-events-none false flex false -10',
-                        )}
-                    >
-                        Search Movies
-                    </label>
+                    
+                        <Text>Search Movies</Text>
                 </View>
-            </form>
-            <View style={tailwind('relative flex flex-col gap-2 mb-4 items-center')}>
+            </View>
+            <View style={tailwind('relative flex flex-col mb-4 items-center')}>
                 <View>
-                    <Dropdown
+                    {/* <Dropdown
                         color="red"
                         style={tailwind('whitespace-nowrap')}
                         buttonText={
@@ -252,10 +229,10 @@ export default function Search() {
                         >
                             Year Published
                         </DropdownLink>
-                    </Dropdown>
+                    </Dropdown> */}
                 </View>
 
-                <View>
+                {/* <View>
                     <Dropdown
                         color="yellow"
                         buttonText={filters.filterCond == '$lte' ? 'Before' : 'After'}
@@ -290,31 +267,23 @@ export default function Search() {
                             After
                         </DropdownLink>
                     </Dropdown>
-                </View>
+                </View> */}
 
-                <View>
-                    <label htmlFor="yearFilter" />
-                    <input
-                        type="number"
-                        min="1800"
-                        max="2099"
-                        step="1"
-                        color="yellow"
-                        id="yearFilter"
-                        name="yearFilter"
+                {/* <View>
+                    <TextInput
                         style={tailwind(
-                            'w-70 h-full text-gray-200 appearance-none overflow-visible outline-none focus:outline-none focus:text-white pl-3 pr-3 py-2.5 text-sm border-gray-300 bg-transparent border border-1 rounded-lg focus:border-2 focus:border-yellow-600',
+                            'h-full text-gray-200 overflow-visible pl-3 pr-3 py-2.5 text-sm border-gray-300 border  rounded-lg',
                         )}
                         placeholder={filters.filterValue.toString()}
-                        onChange={(e: { target: { value: string } }) =>
+                        onChangeText={(e:any) =>
                             setFilters({
                                 ...filters,
                                 filterValue: parseInt(e.target.value),
                             })
                         }
                     />
-                </View>
-                <Button
+                </View> */}
+                {/* <Button
                     size="sm"
                     style={tailwind('whitespace-nowrap')}
                     ripple="light"
@@ -331,17 +300,17 @@ export default function Search() {
                         size="sm"
                     />{' '}
                     Sort by year published
-                </Button>
+                </Button> */}
             </View>
 
             <View
                 style={tailwind(
-                    'max-w-screen-xl w-full h-full flex justify-between flex-wrap gap-8 mb-10',
+                    'max-w-screen-xl w-full h-full flex justify-between flex-wrap mb-10',
                 )}
             >
                 {searchResult &&
                     searchResult.map((movie) => (
-                        <View style={tailwind('m-auto')} key={movie?._id}>
+                        <View style={tailwind('')} key={movie?._id}>
                             <MovieCard
                                 title={movie?.title}
                                 description={movie?.description}
@@ -351,24 +320,21 @@ export default function Search() {
                     ))}
             </View>
 
-            <View style={tailwind('m-auto')}>
+            <ScrollView style={tailwind('')}>
                 {!pageState.hasNextPage && (
-                    <Button
-                        size="sm"
-                        style={tailwind('mx-auto')}
-                        ripple="light"
-                        color="red"
-                        onClick={() =>
+                    <Pressable
+                        style={tailwind('')}
+                        onPress={() =>
                             setPageState({
                                 ...pageState,
                                 page: pageState.page + 1,
                             })
                         }
                     >
-                        Show more ...
-                    </Button>
+                        <Text>Show more ...</Text>
+                    </Pressable>
                 )}
-            </View>
+            </ScrollView>
         </View>
     )
 }

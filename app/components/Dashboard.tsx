@@ -6,7 +6,7 @@ import Search from './Search'
 export default function Dashboard() {
     return (
         <View>
-            <MovieForm />
+            {/* <MovieForm /> */}
             <Search />
         </View>
     )
