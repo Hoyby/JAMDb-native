@@ -114,10 +114,10 @@ export default function Search() {
 
     let timer: NodeJS.Timeout
 
-    const handeSearchChange = (event:any) => {
+    const handeSearchChange = (text:string) => {
         clearTimeout(timer)
         timer = setTimeout(() => {
-            setSearchInput(event.target.value)
+            setSearchInput(text)
         }, 700)
     }
 
@@ -181,7 +181,7 @@ export default function Search() {
                         <Text>search</Text>
                     </View>
                     <TextInput
-                        onChangeText={handeSearchChange}
+                        onChangeText={text => handeSearchChange(text)}
                         style={tailwind(
                             'w-full h-full text-gray-500 pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
                         )}
@@ -303,24 +303,24 @@ export default function Search() {
                 </Button> */}
             </View>
 
-            <View
-                style={tailwind(
+            <ScrollView
+                contentContainerStyle={tailwind(
                     'max-w-screen-xl w-full h-full flex justify-between flex-wrap mb-10',
                 )}
             >
                 {searchResult &&
                     searchResult.map((movie) => (
-                        <View style={tailwind('')} key={movie?._id}>
+                        <ScrollView style={tailwind('')} key={movie?._id}>
                             <MovieCard
                                 title={movie?.title}
                                 description={movie?.description}
                                 _id={movie?._id}
                             />
-                        </View>
+                        </ScrollView>
                     ))}
-            </View>
+            </ScrollView>
 
-            <ScrollView style={tailwind('')}>
+            <View style={tailwind('')}>
                 {!pageState.hasNextPage && (
                     <Pressable
                         style={tailwind('')}
@@ -334,7 +334,7 @@ export default function Search() {
                         <Text>Show more ...</Text>
                     </Pressable>
                 )}
-            </ScrollView>
+            </View>
         </View>
     )
 }
