@@ -2,10 +2,8 @@ import React, { SetStateAction, useEffect, useState } from 'react'
 import { Link, useParams, Navigate } from 'react-router-native'
 import MovieService from '../services/movieService'
 import { FindMovie_findMovie } from '../services/movieService/__generated__/FindMovie'
-
 import tailwind from 'tailwind-rn'
 import { Pressable, View, Text } from 'react-native'
-/* eslint-enable */
 
 /**
  * Provides information about a spesific movie

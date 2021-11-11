@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
-import { View, Text, TextInput, Button, Pressable, ScrollView } from 'react-native'
+import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
 import tailwind from 'tailwind-rn'
 
 // Redux dispatch
@@ -169,7 +169,7 @@ export default function Search() {
     }, [])
 
     return (
-        <View style={tailwind('mb-40')}>
+        <ScrollView style={tailwind('mb-40')}>
             <View style={tailwind('my-10')}>
                 {/* Search Bar */}
                 <View style={tailwind('w-full relative h-12')}>
@@ -335,6 +335,6 @@ export default function Search() {
                     </Pressable>
                 )}
             </View>
-        </View>
+        </ScrollView>
     )
 }

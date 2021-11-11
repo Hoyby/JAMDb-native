@@ -2,7 +2,6 @@ import React from 'react'
 import MovieDetail from './MovieDetail'
 import { Link, Route } from 'react-router-native'
 import { Routes, BrowserRouter } from 'react-router-dom'
-
 import { View, Text } from 'react-native'
 import tailwind from 'tailwind-rn'
 /* eslint-enable */
