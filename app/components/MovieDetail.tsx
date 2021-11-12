@@ -1,22 +1,9 @@
 import React, { SetStateAction, useEffect, useState } from 'react'
-import { Link, Redirect, useParams } from 'react-router-native'
+import { Link, useParams, Navigate } from 'react-router-native'
 import MovieService from '../services/movieService'
 import { FindMovie_findMovie } from '../services/movieService/__generated__/FindMovie'
-
-// material-tailwind is not officially supported by TS - hence the ignores
-/* eslint-disable */
-// @ts-ignore
-import Modal from '@material-tailwind/react/Modal'
-// @ts-ignore
-import ModalHeader from '@material-tailwind/react/ModalHeader'
-// @ts-ignore
-import ModalBody from '@material-tailwind/react/ModalBody'
-// @ts-ignore
-import ModalFooter from '@material-tailwind/react/ModalFooter'
-// @ts-ignore
-import Button from '@material-tailwind/react/Button'
 import tailwind from 'tailwind-rn'
-/* eslint-enable */
+import { Pressable, View, Text } from 'react-native'
 
 /**
  * Provides information about a spesific movie
@@ -42,34 +29,31 @@ export default function MovieDetail() {
     }, [])
 
     if (!showModal) {
-        return <Redirect to="/" />
+        return <Navigate to="/" />
     }
 
     return (
-        <Modal size="regular" active={showModal} toggler={() => setShowModal(false)}>
-            <ModalHeader toggler={() => setShowModal(false)}>
+        <View>
+            <View>
                 {movie?.title || 'Could not get name'}
-            </ModalHeader>
+            </View>
 
-            <ModalBody>
-                <p style={tailwind('text-base  text-gray-600 font-light mb-10')}>
+            <View>
+                <Text style={tailwind('text-base text-gray-600 font-light mb-10')}>
                     Released: {movie?.published}
-                </p>
-                <p style={tailwind('text-base  text-gray-600 font-normal')}>{movie?.description}</p>
-            </ModalBody>
+                </Text>
+                <Text style={tailwind('text-base text-gray-600 font-normal')}>{movie?.description}</Text>
+            </View>
 
-            <ModalFooter>
+            <View>
                 <Link to={'/'}>
-                    <Button
-                        color="red"
-                        buttonType="link"
-                        onClick={() => setShowModal(false)}
-                        ripple="dark"
+                    <Pressable
+                        onPress={() => setShowModal(false)}
                     >
-                        Close
-                    </Button>
+                        <Text>Close</Text>
+                    </Pressable>
                 </Link>
-            </ModalFooter>
-        </Modal>
+            </View>
+        </View>
     )
 }

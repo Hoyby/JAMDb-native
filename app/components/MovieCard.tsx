@@ -1,20 +1,8 @@
 import React from 'react'
 import MovieDetail from './MovieDetail'
-import { Link, Route, Switch, BrowserRouter } from 'react-router-native'
-
-// material-tailwind is not officially supported by TS - hence the ignores
-/* eslint-disable */
-// @ts-ignore
-import Card from '@material-tailwind/react/Card'
-// @ts-ignore
-import CardBody from '@material-tailwind/react/CardBody'
-// @ts-ignore
-import Paragraph from '@material-tailwind/react/Paragraph'
-// @ts-ignore
-import CardFooter from '@material-tailwind/react/CardFooter'
-// @ts-ignore
-import H6 from '@material-tailwind/react/Heading6'
-import { View } from 'react-native'
+import { Link, Route } from 'react-router-native'
+import { Routes, BrowserRouter } from 'react-router-dom'
+import { View, Text } from 'react-native'
 import tailwind from 'tailwind-rn'
 /* eslint-enable */
 
@@ -37,23 +25,23 @@ export function MovieCard({ title, description, _id }: IMovieCard) {
 
     return (
         <View style={tailwind('w-80')}>
-            <BrowserRouter>
-                <Link to={'/movies/' + _id} key={_id}>
-                    <Card>
-                        <CardBody>
-                            <H6>{title}</H6>
-                            <Paragraph color="gray">{shortDesc()}</Paragraph>
-                        </CardBody>
+            {/* <BrowserRouter>
+                <Link to={'/movies/' + _id} key={_id}> */}
+                    <View>
+                        <View>
+                            <Text>{title}</Text>
+                            <Text>{shortDesc()}</Text>
+                        </View>
 
-                        <CardFooter>
-                            <p style={tailwind('text-red-500')}>Read More</p>
-                        </CardFooter>
-                    </Card>
-                </Link>
-                <Switch>
-                    <Route path="/movies/:id" children={<MovieDetail />} />
-                </Switch>
-            </BrowserRouter>
+                        <View>
+                            <Text style={tailwind('text-red-500')}>Read More</Text>
+                        </View>
+                    </View>
+                {/* </Link>
+                 <Routes>
+                     <Route path="/movies/:id" children={<MovieDetail />} />
+                 </Routes>
+            </BrowserRouter> */}
         </View>
     )
 }
