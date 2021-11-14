@@ -172,10 +172,17 @@ export default function Search() {
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
+    const [open2, setOpen2] = useState(false);
+    const [value2, setValue2] = useState(null);
     const [items, setItems] = useState([
         {label: 'Year Added', value: 'Year Added'},
         {label: 'Year Published', value: 'Year Published'}
       ]);
+
+    const [items2, setItems2] = useState([
+        {label: 'Before', value: 'Before'},
+        {label: 'After', value: 'After'}
+    ]);
 
 
     return (
@@ -200,11 +207,11 @@ export default function Search() {
                         <Text>Search Movies</Text>
                 </View>
             </View>
-            <View style={tailwind('relative flex flex-col mb-20 items-center')}> 
+            <View style={tailwind('relative flex flex-row mb-20 items-center')}> 
                 <View>
                     <DropDownPicker
                         //color="red" //make it more styllish with https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/usage
-                        style={tailwind('whitespace-nowrap mb-10')} 
+                        style={tailwind('whitespace-nowrap mb-10 pr-64')} 
                         open={open}
                         value={value}
                         items={items}
@@ -262,7 +269,33 @@ export default function Search() {
                         </DropdownLink> */}
                 </View>
 
-                {/* <View>
+                <View>
+                    <DropDownPicker
+                        style={tailwind('whitespace-nowrap mb-10 mr-40')}
+                        open={open2}
+                        value={value2}
+                        items={items2}
+                        setOpen={setOpen2}
+                        setValue={setValue2}
+                        containerStyle={{height: 40}}
+                        setItems={setItems}
+                        onChangeValue={(value) => {
+                            if(value == 'Before'){
+                                setFilters({
+                                    ...filters,
+                                    filterCond: '$lte',
+                                })
+                            }else{
+                                setFilters({
+                                    ...filters,
+                                    filterCond: '$gte',
+                                })
+                            }
+                        }}
+
+                    />
+                
+                {/*
                     <Dropdown
                         color="yellow"
                         buttonText={filters.filterCond == '$lte' ? 'Before' : 'After'}
@@ -297,7 +330,8 @@ export default function Search() {
                             After
                         </DropdownLink>
                     </Dropdown>
-                </View> */}
+                        */}
+                </View>
 
                 {/* <View>
                     <TextInput
