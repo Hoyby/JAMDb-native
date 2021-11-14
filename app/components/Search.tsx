@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import MovieService from '../services/movieService'
 import { MovieCard } from './MovieCard'
 import { useAppDispatch, useAppSelector } from '../hooks'
@@ -6,7 +6,9 @@ import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
+import DropDownPicker from 'react-native-dropdown-picker'
 import tailwind from 'tailwind-rn'
+import { addTypenameToDocument } from '@apollo/client/utilities'
 
 // Redux dispatch
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -168,6 +170,14 @@ export default function Search() {
         })
     }, [])
 
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {label: 'Year Added', value: 'Year Added'},
+        {label: 'Year Published', value: 'Year Published'}
+      ]);
+
+
     return (
         <ScrollView style={tailwind('mb-40')}>
             <View style={tailwind('my-10')}>
@@ -190,19 +200,40 @@ export default function Search() {
                         <Text>Search Movies</Text>
                 </View>
             </View>
-            <View style={tailwind('relative flex flex-col mb-4 items-center')}>
+            <View style={tailwind('relative flex flex-col mb-20 items-center')}> 
                 <View>
-                    {/* <Dropdown
-                        color="red"
-                        style={tailwind('whitespace-nowrap')}
-                        buttonText={
-                            filters.filterField == 'published' ? 'Year Published' : 'Year Added'
-                        }
-                        buttonType="outline"
-                        size="sm"
-                        ripple="dark"
-                    >
-                        <DropdownLink
+                    <DropDownPicker
+                        //color="red" //make it more styllish with https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/usage
+                        style={tailwind('whitespace-nowrap mb-10')} 
+                        open={open}
+                        value={value}
+                        items={items}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        containerStyle={{height: 40}}
+                        setItems={setItems}
+                        onChangeValue={(value) => {
+                            if(value == 'Year Added'){
+                                setFilters({
+                                    ...filters,
+                                    filterField: 'createdAt',
+                                })
+                            }else{
+                                setFilters({
+                                    ...filters,
+                                    filterField: 'published',
+                                })
+                            }
+                        }}
+                        //buttonText={
+                        //    filters.filterField == 'published' ? 'Year Published' : 'Year Added'
+                        //}
+                        //buttonType="outline"
+                        //size="sm"
+                        //ripple="dark"
+
+                    />
+                        {/* <DropdownLink
                             href="#"
                             color="red"
                             ripple="light"
@@ -228,8 +259,7 @@ export default function Search() {
                             }
                         >
                             Year Published
-                        </DropdownLink>
-                    </Dropdown> */}
+                        </DropdownLink> */}
                 </View>
 
                 {/* <View>
