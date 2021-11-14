@@ -2,42 +2,41 @@ import React from 'react'
 import MovieDetail from './MovieDetail'
 import { Link, Route } from 'react-router-native'
 import { Routes, BrowserRouter } from 'react-router-dom'
-import { View, Text } from 'react-native'
-import tailwind from 'tailwind-rn'
-/* eslint-enable */
+import { View, Text } from '../Base'
 
 interface IMovieCard {
     _id: string
     title: string
     description: string
+    className?: string
 }
 
-export function MovieCard({ title, description, _id }: IMovieCard) {
+export function MovieCard({ title, description, _id, className }: IMovieCard) {
     const shortDesc = () => {
         /**
          * Returns a short version of the description
          * Appends 3 dots if the description contains data that is not presented
          */
-        let shortDesc = description.split(' ').slice(0, 12).join(' ')
-        if (description.length > shortDesc.length) shortDesc += '...'
-        return shortDesc
+        const desc = description.split(' ').slice(0, 12).join(' ')
+        if (description.length > desc.length) return desc + '...'
+        return desc
     }
 
     return (
-        <View style={tailwind('w-80')}>
+        <View className={`my-2 ${className}`}>
             {/* <BrowserRouter>
                 <Link to={'/movies/' + _id} key={_id}> */}
-                    <View>
-                        <View>
-                            <Text>{title}</Text>
-                            <Text>{shortDesc()}</Text>
-                        </View>
+            <View className="bg-white rounded-xl w-80 p-4">
+                <View>
+                    <Text className="text-grey-900 text-xl font-serif font-bold">{title}</Text>
+                    <Text className="mb-4">{shortDesc()}</Text>
+                </View>
 
-                        <View>
-                            <Text style={tailwind('text-red-500')}>Read More</Text>
-                        </View>
-                    </View>
-                {/* </Link>
+                <View>
+                    <Text className="text-red-500">Read More</Text>
+                </View>
+            </View>
+            {/* </Link>
                  <Routes>
                      <Route path="/movies/:id" children={<MovieDetail />} />
                  </Routes>

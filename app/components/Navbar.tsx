@@ -9,21 +9,21 @@ export default function NavBar() {
 
     const notImplemented = (
         <View>
-            <View>Whops! That's embarrassing</View>
-            <View>This functionality has not yet been implemented.</View>
+            <View><Text>Whops! That's embarrassing</Text></View>
+            <View><Text>This functionality has not yet been implemented.</Text></View>
         </View>
     )
 
     return (
         <>
             <View
-                style={tailwind('flex justify-start items-start  py-1 px-5 bg-gray-700')}
+                style={tailwind('flex justify-start items-start px-5')}
                 data-testid="nav"
             >
                 <View style={tailwind('container flex items-center justify-between')}>
                     <View style={tailwind('w-full flex flex-row justify-between')}>
                         <View style={tailwind('text-sm font-bold   mr-4  text-white')}>
-                            <Text style={tailwind('text-red-600 text-2xl')}>JAMDb</Text>
+                            <Text style={tailwind('text-red-600 text-2xl ')}><strong>JAMDb</strong></Text>
                             <Text style={tailwind('opacity-25 m-0 p-0 text-white')}>
                                 Just Another Movie Database
                             </Text>

@@ -18,7 +18,7 @@ import Input from '@material-tailwind/react/Input'
 import Button from '@material-tailwind/react/Button'
 // @ts-ignore
 import Alert from '@material-tailwind/react/Alert'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import tailwind from 'tailwind-rn'
 /* eslint-enable */
 
@@ -78,7 +78,7 @@ export default function MovieForm() {
             {showAlert ? (
                 <View style={tailwind('fixed inset-0 z-50 w-1/2 m-auto')}>
                     <Alert color="green">
-                        <p style={tailwind('w-full text-center')}>Movie successfully created</p>
+                        <Text style={tailwind('w-full text-center')}>Movie successfully created</Text>
                     </Alert>
                 </View>
             ) : null}
@@ -95,7 +95,7 @@ export default function MovieForm() {
                                     'flex items-start justify-between p-5 border-b border-solid border-gray-200 rounded-t',
                                 )}
                             >
-                                <h3 style={tailwind('text-black text-3xl')}>Add new movie</h3>
+                                <Text style={tailwind('text-black text-3xl')}>Add new movie</Text>
                                 <button
                                     style={tailwind(
                                         'p-1  bg-transparent border-0 text-black float-right text-2xl outline-none focus:outline-none',

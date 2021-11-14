@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
-import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
+import { TextInput, Pressable } from 'react-native'
+import { View, Text, ScrollView } from '../Base'
 import tailwind from 'tailwind-rn'
 
 // Redux dispatch
@@ -114,7 +115,7 @@ export default function Search() {
 
     let timer: NodeJS.Timeout
 
-    const handeSearchChange = (text:string) => {
+    const handeSearchChange = (text: string) => {
         clearTimeout(timer)
         timer = setTimeout(() => {
             setSearchInput(text)
@@ -186,141 +187,35 @@ export default function Search() {
                             'w-full h-full text-gray-500 pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
                         )}
                     />
-                    
-                        <Text>Search Movies</Text>
+
+                    <Text>Search Movies</Text>
                 </View>
             </View>
             <View style={tailwind('relative flex flex-col mb-4 items-center')}>
                 <View>
-                    {/* <Dropdown
-                        color="red"
-                        style={tailwind('whitespace-nowrap')}
-                        buttonText={
-                            filters.filterField == 'published' ? 'Year Published' : 'Year Added'
-                        }
-                        buttonType="outline"
-                        size="sm"
-                        ripple="dark"
-                    >
-                        <DropdownLink
-                            href="#"
-                            color="red"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterField: 'createdAt',
-                                })
-                            }
-                        >
-                            Year Added
-                        </DropdownLink>
-                        <DropdownLink
-                            href="#"
-                            color="red"
-                            size="sm"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterField: 'published',
-                                })
-                            }
-                        >
-                            Year Published
-                        </DropdownLink>
-                    </Dropdown> */}
                 </View>
 
-                {/* <View>
-                    <Dropdown
-                        color="yellow"
-                        buttonText={filters.filterCond == '$lte' ? 'Before' : 'After'}
-                        buttonType="outline"
-                        size="sm"
-                        ripple="dark"
-                    >
-                        <DropdownLink
-                            href="#"
-                            color="yellow"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterCond: '$lte',
-                                })
-                            }
-                        >
-                            Before
-                        </DropdownLink>
-                        <DropdownLink
-                            href="#"
-                            color="yellow"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterCond: '$gte',
-                                })
-                            }
-                        >
-                            After
-                        </DropdownLink>
-                    </Dropdown>
-                </View> */}
 
-                {/* <View>
-                    <TextInput
-                        style={tailwind(
-                            'h-full text-gray-200 overflow-visible pl-3 pr-3 py-2.5 text-sm border-gray-300 border  rounded-lg',
-                        )}
-                        placeholder={filters.filterValue.toString()}
-                        onChangeText={(e:any) =>
-                            setFilters({
-                                ...filters,
-                                filterValue: parseInt(e.target.value),
-                            })
-                        }
-                    />
-                </View> */}
-                {/* <Button
-                    size="sm"
-                    style={tailwind('whitespace-nowrap')}
-                    ripple="light"
-                    color="red"
-                    onClick={() =>
-                        setFilters({
-                            ...filters,
-                            sortValue: -filters.sortValue,
-                        })
-                    }
-                >
-                    <Icon
-                        name={filters.sortValue === -1 ? 'arrow_upward' : 'arrow_downward'}
-                        size="sm"
-                    />{' '}
-                    Sort by year published
-                </Button> */}
             </View>
 
-            <ScrollView
+            <ScrollView showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
                 contentContainerStyle={tailwind(
-                    'max-w-screen-xl w-full h-full flex justify-between flex-wrap mb-10',
+                    'max-w-screen-xl w-full h-full flex flex-row justify-between flex-wrap',
                 )}
             >
                 {searchResult &&
                     searchResult.map((movie) => (
-                        <ScrollView style={tailwind('')} key={movie?._id}>
-                            <MovieCard
-                                title={movie?.title}
-                                description={movie?.description}
-                                _id={movie?._id}
-                            />
-                        </ScrollView>
+                        <MovieCard
+                            title={movie?.title}
+                            description={movie?.description}
+                            _id={movie?._id}
+
+                        />
                     ))}
             </ScrollView>
 
-            <View style={tailwind('')}>
+            <View>
                 {!pageState.hasNextPage && (
                     <Pressable
                         style={tailwind('')}
