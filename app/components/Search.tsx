@@ -125,12 +125,15 @@ export default function Search() {
 
     const handleFilterChange = (text:string) => {
         clearTimeout(timer)
-        timer = setTimeout(() => {
-            setFilters({
-                ...filters,
-                filterValue: parseInt(text),
-            })
-        }, 700)
+        console.log(text)
+        if(text != ""){
+            timer = setTimeout(() => {
+                setFilters({
+                    ...filters,
+                    filterValue: parseInt(text),
+                })
+            }, 700)
+        }
     }
 
     // searchResult state is cleared and fetched when user input changes
