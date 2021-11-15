@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
-import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
+import { View, Text, TextInput, Pressable, ScrollView, Button } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import tailwind from 'tailwind-rn'
 import { addTypenameToDocument } from '@apollo/client/utilities'
@@ -123,6 +123,16 @@ export default function Search() {
         }, 700)
     }
 
+    const handleFilterChange = (text:string) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            setFilters({
+                ...filters,
+                filterValue: parseInt(text),
+            })
+        }, 700)
+    }
+
     // searchResult state is cleared and fetched when user input changes
     useEffect(() => {
         setPageState({
@@ -207,7 +217,7 @@ export default function Search() {
                         <Text>Search Movies</Text>
                 </View>
             </View>
-            <View style={tailwind('relative flex flex-row mb-20 items-center')}> 
+            <View style={tailwind('relative flex flex-row mb-20 items-center rounded-lg')}> 
                 <View>
                     <DropDownPicker
                         //color="red" //make it more styllish with https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/usage
@@ -278,7 +288,7 @@ export default function Search() {
                         setOpen={setOpen2}
                         setValue={setValue2}
                         containerStyle={{height: 40}}
-                        setItems={setItems}
+                        setItems={setItems2}
                         onChangeValue={(value) => {
                             if(value == 'Before'){
                                 setFilters({
@@ -333,38 +343,34 @@ export default function Search() {
                         */}
                 </View>
 
-                {/* <View>
+                <View>
                     <TextInput
                         style={tailwind(
-                            'h-full text-gray-200 overflow-visible pl-3 pr-3 py-2.5 text-sm border-gray-300 border  rounded-lg',
+                            'h-full text-gray-500 overflow-visible pl-3 pr-3 py-2.5 text-sm border-gray-300 border rounded-lg',
                         )}
                         placeholder={filters.filterValue.toString()}
-                        onChangeText={(e:any) =>
-                            setFilters({
-                                ...filters,
-                                filterValue: parseInt(e.target.value),
-                            })
-                        }
+                        onChangeText={text => handleFilterChange(text)}
                     />
-                </View> */}
-                {/* <Button
-                    size="sm"
-                    style={tailwind('whitespace-nowrap')}
-                    ripple="light"
+                </View>
+                <Button
+                    //size="sm"
+                    title={"Sort by year published"}
+                    //style={tailwind('whitespace-nowrap')}
+                    //ripple="light"
                     color="red"
-                    onClick={() =>
+                    onPress={() =>
                         setFilters({
                             ...filters,
                             sortValue: -filters.sortValue,
                         })
                     }
                 >
-                    <Icon
+                    {/*<Icon //dont think react native has Icon support if want to change we have to use Pressable to create custom button
                         name={filters.sortValue === -1 ? 'arrow_upward' : 'arrow_downward'}
                         size="sm"
                     />{' '}
-                    Sort by year published
-                </Button> */}
+                    */}
+                </Button>
             </View>
 
             <ScrollView
