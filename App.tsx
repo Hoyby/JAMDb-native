@@ -13,7 +13,7 @@ import { View } from 'react-native'
 export default function App() {
 
     return (
-        <View /*style={styles.body}*/>
+        <View style={styles.body}>
             <Provider store={store}>
                 <ApolloProvider client={apolloClient}>
                     <Layout>
