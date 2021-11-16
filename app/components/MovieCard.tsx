@@ -2,16 +2,16 @@ import React from 'react'
 import MovieDetail from './MovieDetail'
 import { Link, Route } from 'react-router-native'
 import { Routes, BrowserRouter } from 'react-router-dom'
-import { View, Text } from '../Base'
+import { View, Text } from 'react-native'
+import tailwind from 'tailwind-rn'
 
 interface IMovieCard {
     _id: string
     title: string
     description: string
-    className?: string
 }
 
-export function MovieCard({ title, description, _id, className }: IMovieCard) {
+export function MovieCard({ title, description, _id }: IMovieCard) {
     const shortDesc = () => {
         /**
          * Returns a short version of the description
@@ -23,17 +23,17 @@ export function MovieCard({ title, description, _id, className }: IMovieCard) {
     }
 
     return (
-        <View className={`my-2 ${className}`}>
+        <View style={tailwind("my-2")}>
             {/* <BrowserRouter>
                 <Link to={'/movies/' + _id} key={_id}> */}
-            <View className="bg-white rounded-xl w-80 p-4">
+            <View style={tailwind("bg-white rounded-xl w-80 p-4")}>
                 <View>
-                    <Text className="text-grey-900 text-xl font-serif font-bold">{title}</Text>
-                    <Text className="mb-4">{shortDesc()}</Text>
+                    <Text style={tailwind("text-gray-900 text-xl font-bold")}>{title}</Text>
+                    <Text style={tailwind("mb-4")}>{shortDesc()}</Text>
                 </View>
 
                 <View>
-                    <Text className="text-red-500">Read More</Text>
+                    <Text style={tailwind("text-red-500")}>Read More</Text>
                 </View>
             </View>
             {/* </Link>

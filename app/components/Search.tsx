@@ -5,8 +5,7 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
-import { TextInput, Pressable } from 'react-native'
-import { View, Text, ScrollView } from '../Base'
+import { TextInput, Pressable, View, Text, ScrollView } from 'react-native'
 import tailwind from 'tailwind-rn'
 
 // Redux dispatch
@@ -210,7 +209,7 @@ export default function Search() {
                             title={movie?.title}
                             description={movie?.description}
                             _id={movie?._id}
-
+                            key={movie._id}
                         />
                     ))}
             </ScrollView>

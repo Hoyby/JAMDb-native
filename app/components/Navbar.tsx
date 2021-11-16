@@ -23,7 +23,7 @@ export default function NavBar() {
                 <View style={tailwind('container flex items-center justify-between')}>
                     <View style={tailwind('w-full flex flex-row justify-between')}>
                         <View style={tailwind('text-sm font-bold   mr-4  text-white')}>
-                            <Text style={tailwind('text-red-600 text-2xl ')}><strong>JAMDb</strong></Text>
+                            <Text style={tailwind('text-red-600 text-2xl font-bold')}>JAMDb</Text>
                             <Text style={tailwind('opacity-25 m-0 p-0 text-white')}>
                                 Just Another Movie Database
                             </Text>
