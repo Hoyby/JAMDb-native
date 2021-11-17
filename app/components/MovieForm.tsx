@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import MovieService from '../services/movieService'
 import { CreateMovieVariables } from '../services/movieService/__generated__/CreateMovie'
-import { View, Text, Pressable, Alert } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import { Button, Overlay, Input } from 'react-native-elements'
 import tailwind from 'tailwind-rn'
 
@@ -42,7 +42,6 @@ export default function MovieForm() {
             .then(() => {
                 setVisible(false)
                 Alert.alert('Movie successfully created')
-                // setTimeout(() => setshowAlert(false), 2000)
             })
             .catch((err: Error) => {
                 console.error(err)

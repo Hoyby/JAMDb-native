@@ -1,5 +1,7 @@
-import React, { useRef, useState } from 'react'
-import { View, Text, Image, ScrollView, TextInput, Button, Pressable } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, Pressable } from 'react-native'
+import { Tooltip } from 'react-native-elements'
+
 import tailwind from 'tailwind-rn'
 
 export default function NavBar() {
@@ -45,34 +47,42 @@ export default function NavBar() {
                         </Pressable>
                     </View>
                     <View style={tailwind(`flex-grow mt-8 items-center ${openMenu}`)}>
-                        <View style={tailwind('flex  flex-col items-center')}>
+                        <View style={tailwind('flex flex-col items-center')}>
                             <Pressable
                                 style={tailwind(
-                                    'px-5 py-4 flex  text-xs uppercase font-medium  text-white rounded-lg justify-start bg-gray-700',
+                                    'px-5 py-4 flex text-xs uppercase font-medium  text-white rounded-lg justify-start bg-gray-700',
                                 )}
                             >
                                 <Text style={tailwind('text-white')}> Discover </Text>
                             </Pressable>
-                            <Pressable
+                            <View
                                 style={tailwind(
-                                    'px-5 py-4 flex  text-xs uppercase font-medium  text-white rounded-lg justify-start',
+                                    'px-6 py-4 my-2 flex text-xs uppercase font-medium  text-white rounded-lg justify-start border border-gray-500',
                                 )}
                             >
-                                <Text style={tailwind('text-white')}> Profile </Text>
-                            </Pressable>
-                            <Pressable
+                                <Tooltip
+                                    popover={notImplemented}
+                                    backgroundColor={'#ffffff'}
+                                    overlayColor={'transparent'}
+                                    height={120}
+                                >
+                                    <Text style={tailwind('text-white')}> Profile </Text>
+                                </Tooltip>
+                            </View>
+                            <View
                                 style={tailwind(
-                                    'px-5 py-4 flex  text-xs uppercase font-medium  text-white rounded-lg justify-start',
+                                    'px-5 py-4 flex text-xs uppercase font-medium  text-white rounded-lg justify-start border border-gray-500',
                                 )}
                             >
-                                <Text style={tailwind('text-white')}> Settings </Text>
-                            </Pressable>
-                            {/* <Popover placement="bottom" ref={profileRef}>
-                                {notImplemented}
-                            </Popover>
-                            <Popover placement="bottom" ref={settingsRef}>
-                                {notImplemented}
-                            </Popover> */}
+                                <Tooltip
+                                    popover={notImplemented}
+                                    backgroundColor={'#ffffff'}
+                                    overlayColor={'transparent'}
+                                    height={120}
+                                >
+                                    <Text style={tailwind('text-white')}> Settings </Text>
+                                </Tooltip>
+                            </View>
                         </View>
                     </View>
                 </View>

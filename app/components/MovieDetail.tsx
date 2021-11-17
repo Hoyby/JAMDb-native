@@ -2,8 +2,9 @@ import React, { SetStateAction, useEffect, useState } from 'react'
 import { Link, useParams, Navigate } from 'react-router-native'
 import MovieService from '../services/movieService'
 import { FindMovie_findMovie } from '../services/movieService/__generated__/FindMovie'
+import { Button, Overlay } from 'react-native-elements'
 import tailwind from 'tailwind-rn'
-import { Pressable, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
 
 /**
  * Provides information about a spesific movie
@@ -33,27 +34,30 @@ export default function MovieDetail() {
     }
 
     return (
-        <View>
-            <View>
-                {movie?.title || 'Could not get name'}
-            </View>
+        <Overlay isVisible={true} style={tailwind('')}>
+            <Text style={tailwind('text-2xl')}>{movie?.title || 'Could not get name'}</Text>
 
-            <View>
-                <Text style={tailwind('text-base text-gray-600 font-light mb-10')}>
-                    Released: {movie?.published}
+            <View style={tailwind('max-w-lg')}>
+                {movie?.published && (
+                    <Text style={tailwind('text-base text-gray-600 font-light mb-10')}>
+                        Released: {movie?.published}
+                    </Text>
+                )}
+
+                <Text style={tailwind('text-base text-gray-600 font-normal')}>
+                    {movie?.description}
                 </Text>
-                <Text style={tailwind('text-base text-gray-600 font-normal')}>{movie?.description}</Text>
             </View>
 
             <View>
                 <Link to={'/'}>
-                    <Pressable
+                    <Button
                         onPress={() => setShowModal(false)}
-                    >
-                        <Text>Close</Text>
-                    </Pressable>
+                        buttonStyle={tailwind('m-4 bg-red-400')}
+                        title="Close"
+                    ></Button>
                 </Link>
             </View>
-        </View>
+        </Overlay>
     )
 }
