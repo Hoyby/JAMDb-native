@@ -5,10 +5,11 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
-import { View, Text, TextInput, Pressable, ScrollView, Button } from 'react-native'
+import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import tailwind from 'tailwind-rn'
 import { addTypenameToDocument } from '@apollo/client/utilities'
+import { Button, Input } from 'react-native-elements'
 
 // Redux dispatch
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -116,17 +117,17 @@ export default function Search() {
 
     let timer: NodeJS.Timeout
 
-    const handeSearchChange = (text:string) => {
+    const handeSearchChange = (text: string) => {
         clearTimeout(timer)
         timer = setTimeout(() => {
             setSearchInput(text)
         }, 700)
     }
 
-    const handleFilterChange = (text:string) => {
+    const handleFilterChange = (text: string) => {
         clearTimeout(timer)
         console.log(text)
-        if(text != ""){
+        if (text != '') {
             timer = setTimeout(() => {
                 setFilters({
                     ...filters,
@@ -183,23 +184,22 @@ export default function Search() {
         })
     }, [])
 
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [open2, setOpen2] = useState(false);
-    const [value2, setValue2] = useState(null);
+    const [open, setOpen] = useState(false)
+    const [value, setValue] = useState(null)
+    const [open2, setOpen2] = useState(false)
+    const [value2, setValue2] = useState(null)
     const [items, setItems] = useState([
-        {label: 'Year Added', value: 'Year Added'},
-        {label: 'Year Published', value: 'Year Published'}
-      ]);
+        { label: 'Year Added', value: 'Year Added' },
+        { label: 'Year Published', value: 'Year Published' },
+    ])
 
     const [items2, setItems2] = useState([
-        {label: 'Before', value: 'Before'},
-        {label: 'After', value: 'After'}
-    ]);
-
+        { label: 'Before', value: 'Before' },
+        { label: 'After', value: 'After' },
+    ])
 
     return (
-        <ScrollView style={tailwind('mb-40')}>
+        <View>
             <View style={tailwind('my-10')}>
                 {/* Search Bar */}
                 <View style={tailwind('w-full relative h-12')}>
@@ -211,203 +211,123 @@ export default function Search() {
                         <Text>search</Text>
                     </View>
                     <TextInput
-                        onChangeText={text => handeSearchChange(text)}
+                        onChangeText={(text) => handeSearchChange(text)}
                         style={tailwind(
                             'w-full h-full text-gray-500 pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
                         )}
                     />
-                    
-                        <Text>Search Movies</Text>
+
+                    <Text>Search Movies</Text>
                 </View>
             </View>
-            <View style={tailwind('relative flex flex-row mb-20 items-center rounded-lg')}> 
-                <View>
+            <View style={tailwind('flex flex-col')}>
+                <View style={tailwind('my-4')}>
                     <DropDownPicker
-                        //color="red" //make it more styllish with https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/usage
-                        style={tailwind('whitespace-nowrap mb-10 pr-64')} 
+                        // https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/usage
+                        style={tailwind('mb-10 mr-40')}
                         open={open}
                         value={value}
                         items={items}
                         setOpen={setOpen}
                         setValue={setValue}
-                        containerStyle={{height: 40}}
+                        containerStyle={{ height: 40 }}
                         setItems={setItems}
                         onChangeValue={(value) => {
-                            if(value == 'Year Added'){
+                            if (value == 'Year Added') {
                                 setFilters({
                                     ...filters,
                                     filterField: 'createdAt',
                                 })
-                            }else{
+                            } else {
                                 setFilters({
                                     ...filters,
                                     filterField: 'published',
                                 })
                             }
                         }}
-                        //buttonText={
-                        //    filters.filterField == 'published' ? 'Year Published' : 'Year Added'
-                        //}
-                        //buttonType="outline"
-                        //size="sm"
-                        //ripple="dark"
-
                     />
-                        {/* <DropdownLink
-                            href="#"
-                            color="red"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterField: 'createdAt',
-                                })
-                            }
-                        >
-                            Year Added
-                        </DropdownLink>
-                        <DropdownLink
-                            href="#"
-                            color="red"
-                            size="sm"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterField: 'published',
-                                })
-                            }
-                        >
-                            Year Published
-                        </DropdownLink> */}
                 </View>
 
-                <View>
+                <View style={tailwind('my-4')}>
                     <DropDownPicker
-                        style={tailwind('whitespace-nowrap mb-10 mr-40')}
+                        style={tailwind('mb-10 mr-40')}
                         open={open2}
                         value={value2}
                         items={items2}
                         setOpen={setOpen2}
                         setValue={setValue2}
-                        containerStyle={{height: 40}}
+                        containerStyle={{ height: 40 }}
                         setItems={setItems2}
                         onChangeValue={(value) => {
-                            if(value == 'Before'){
+                            if (value == 'Before') {
                                 setFilters({
                                     ...filters,
                                     filterCond: '$lte',
                                 })
-                            }else{
+                            } else {
                                 setFilters({
                                     ...filters,
                                     filterCond: '$gte',
                                 })
                             }
                         }}
-
                     />
-                
-                {/*
-                    <Dropdown
-                        color="yellow"
-                        buttonText={filters.filterCond == '$lte' ? 'Before' : 'After'}
-                        buttonType="outline"
-                        size="sm"
-                        ripple="dark"
-                    >
-                        <DropdownLink
-                            href="#"
-                            color="yellow"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterCond: '$lte',
-                                })
-                            }
-                        >
-                            Before
-                        </DropdownLink>
-                        <DropdownLink
-                            href="#"
-                            color="yellow"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterCond: '$gte',
-                                })
-                            }
-                        >
-                            After
-                        </DropdownLink>
-                    </Dropdown>
-                        */}
                 </View>
 
                 <View>
-                    <TextInput
+                    <Input
                         style={tailwind(
                             'h-full text-gray-500 overflow-visible pl-3 pr-3 py-2.5 text-sm border-gray-300 border rounded-lg',
                         )}
                         placeholder={filters.filterValue.toString()}
-                        onChangeText={text => handleFilterChange(text)}
+                        onChangeText={(text) => handleFilterChange(text)}
                     />
                 </View>
+
                 <Button
-                    //size="sm"
-                    title={"Sort by year published"}
-                    //style={tailwind('whitespace-nowrap')}
-                    //ripple="light"
-                    color="red"
+                    title={'Sort by year published'}
                     onPress={() =>
                         setFilters({
                             ...filters,
                             sortValue: -filters.sortValue,
                         })
                     }
-                >
-                    {/*<Icon //dont think react native has Icon support if want to change we have to use Pressable to create custom button
-                        name={filters.sortValue === -1 ? 'arrow_upward' : 'arrow_downward'}
-                        size="sm"
-                    />{' '}
-                    */}
-                </Button>
+                ></Button>
             </View>
 
             <ScrollView
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
                 contentContainerStyle={tailwind(
-                    'max-w-screen-xl w-full h-full flex justify-between flex-wrap mb-10',
+                    'max-w-screen-xl w-full justify-between flex-wrap mb-10',
                 )}
             >
-                {searchResult &&
-                    searchResult.map((movie) => (
-                        <ScrollView style={tailwind('')} key={movie?._id}>
+                <View style={tailwind('w-full flex flex-row justify-around flex-wrap mb-10')}>
+                    {searchResult &&
+                        searchResult.map((movie) => (
                             <MovieCard
                                 title={movie?.title}
                                 description={movie?.description}
                                 _id={movie?._id}
+                                key={movie._id}
                             />
-                        </ScrollView>
-                    ))}
-            </ScrollView>
+                        ))}
+                </View>
 
-            <View style={tailwind('')}>
                 {!pageState.hasNextPage && (
-                    <Pressable
-                        style={tailwind('')}
-                        onPress={() =>
-                            setPageState({
-                                ...pageState,
-                                page: pageState.page + 1,
-                            })
-                        }
-                    >
-                        <Text>Show more ...</Text>
-                    </Pressable>
+                    <View style={tailwind('h-24')}>
+                        <Button
+                            onPress={() =>
+                                setPageState({
+                                    ...pageState,
+                                    page: pageState.page + 1,
+                                })
+                            }
+                            title="Load More"
+                        ></Button>
+                    </View>
                 )}
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </View>
     )
 }
