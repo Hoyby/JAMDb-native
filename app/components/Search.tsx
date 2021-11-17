@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MovieService from '../services/movieService'
 import { MovieCard } from './MovieCard'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
-import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import tailwind from 'tailwind-rn'
-import { addTypenameToDocument } from '@apollo/client/utilities'
 import { Button, Input, ButtonGroup } from 'react-native-elements'
 
 // Redux dispatch
@@ -109,10 +108,6 @@ export default function Search() {
             })
     }
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-    }
-
     let timer: NodeJS.Timeout
 
     const handeSearchChange = (text: string) => {
@@ -124,14 +119,19 @@ export default function Search() {
 
     const handleFilterChange = (text: string) => {
         clearTimeout(timer)
-        if (text != '') {
-            timer = setTimeout(() => {
+        timer = setTimeout(() => {
+            if (isNaN(Number(text)) || text.length == 0) {
+                setFilters({
+                    ...filters,
+                    filterValue: 2000,
+                })
+            } else {
                 setFilters({
                     ...filters,
                     filterValue: parseInt(text),
                 })
-            }, 700)
-        }
+            }
+        }, 700)
     }
 
     // searchResult state is cleared and fetched when user input changes
@@ -189,26 +189,19 @@ export default function Search() {
             <View style={tailwind('my-10')}>
                 {/* Search Bar */}
                 <View style={tailwind('w-full relative h-12')}>
-                    <View
-                        style={tailwind(
-                            'p-0 text-gray-600 text-opacity-60 absolute top-1/2 right-3 text-xl',
-                        )}
-                    >
-                        <Text>search</Text>
-                    </View>
-                    <TextInput
+                    <Input
                         onChangeText={(text) => handeSearchChange(text)}
+                        placeholder="Search..."
                         style={tailwind(
-                            'w-full h-full text-gray-500 pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
+                            'w-full h-full text-white pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
                         )}
                     />
-
-                    <Text>Search Movies</Text>
                 </View>
             </View>
+
             <View style={tailwind('flex flex-col')}>
                 <ButtonGroup
-                    containerStyle={tailwind('mb-10 mr-40')}
+                    containerStyle={tailwind('mb-4')}
                     selectedTextStyle={tailwind('')}
                     selectedButtonStyle={tailwind('')}
                     buttons={['Published', 'Created At']}
@@ -234,7 +227,7 @@ export default function Search() {
                 />
 
                 <ButtonGroup
-                    containerStyle={tailwind('mb-10 mr-40')}
+                    containerStyle={tailwind('mb-4')}
                     buttons={['Before', 'After']}
                     selectedIndex={BeforeOrAfterIndex}
                     onPress={(value) => {
@@ -260,7 +253,7 @@ export default function Search() {
                 <View>
                     <Input
                         style={tailwind(
-                            'h-full text-gray-500 overflow-visible pl-3 pr-3 py-2.5 text-sm border-gray-300 border rounded-lg',
+                            'w-full text-white pl-3 pr-9 pt-3.5 pb-2.5 mb-4 border border-gray-300 rounded-lg',
                         )}
                         placeholder={filters.filterValue.toString()}
                         onChangeText={(text) => handleFilterChange(text)}
