@@ -9,21 +9,22 @@ export default function NavBar() {
 
     const notImplemented = (
         <View>
-            <View>Whops! That's embarrassing</View>
-            <View>This functionality has not yet been implemented.</View>
+            <View>
+                <Text>Whops! That's embarrassing</Text>
+            </View>
+            <View>
+                <Text>This functionality has not yet been implemented.</Text>
+            </View>
         </View>
     )
 
     return (
         <>
-            <View
-                style={tailwind('flex justify-start items-start  py-1 px-5 bg-gray-700')}
-                data-testid="nav"
-            >
-                <View style={tailwind('container flex items-center justify-between')}>
+            <View style={tailwind('flex w-full max-w-screen-xl px-4')} data-testid="nav">
+                <View style={tailwind('flex items-center justify-between')}>
                     <View style={tailwind('w-full flex flex-row justify-between')}>
-                        <View style={tailwind('text-sm font-bold   mr-4  text-white')}>
-                            <Text style={tailwind('text-red-600 text-2xl')}>JAMDb</Text>
+                        <View style={tailwind('text-sm font-bold mr-4 text-white')}>
+                            <Text style={tailwind('text-red-600 text-2xl font-bold')}>JAMDb</Text>
                             <Text style={tailwind('opacity-25 m-0 p-0 text-white')}>
                                 Just Another Movie Database
                             </Text>
@@ -43,28 +44,28 @@ export default function NavBar() {
                             ></Text>
                         </Pressable>
                     </View>
-                    <View style={tailwind(`flex-grow items-center ${openMenu}`)}>
+                    <View style={tailwind(`flex-grow mt-8 items-center ${openMenu}`)}>
                         <View style={tailwind('flex  flex-col items-center')}>
                             <Pressable
                                 style={tailwind(
                                     'px-5 py-4 flex  text-xs uppercase font-medium  text-white rounded-lg justify-start bg-gray-700',
                                 )}
                             >
-                                <Text> Discover </Text>
+                                <Text style={tailwind('text-white')}> Discover </Text>
                             </Pressable>
                             <Pressable
                                 style={tailwind(
                                     'px-5 py-4 flex  text-xs uppercase font-medium  text-white rounded-lg justify-start',
                                 )}
                             >
-                                <Text> Profile </Text>
+                                <Text style={tailwind('text-white')}> Profile </Text>
                             </Pressable>
                             <Pressable
                                 style={tailwind(
                                     'px-5 py-4 flex  text-xs uppercase font-medium  text-white rounded-lg justify-start',
                                 )}
                             >
-                                <Text> Settings </Text>
+                                <Text style={tailwind('text-white')}> Settings </Text>
                             </Pressable>
                             {/* <Popover placement="bottom" ref={profileRef}>
                                 {notImplemented}

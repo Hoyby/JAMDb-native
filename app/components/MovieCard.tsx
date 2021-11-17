@@ -4,7 +4,6 @@ import { Link, Route } from 'react-router-native'
 import { Routes, BrowserRouter } from 'react-router-dom'
 import { View, Text } from 'react-native'
 import tailwind from 'tailwind-rn'
-/* eslint-enable */
 
 interface IMovieCard {
     _id: string
@@ -18,26 +17,26 @@ export function MovieCard({ title, description, _id }: IMovieCard) {
          * Returns a short version of the description
          * Appends 3 dots if the description contains data that is not presented
          */
-        let shortDesc = description.split(' ').slice(0, 12).join(' ')
-        if (description.length > shortDesc.length) shortDesc += '...'
-        return shortDesc
+        const desc = description.split(' ').slice(0, 12).join(' ')
+        if (description.length > desc.length) return desc + '...'
+        return desc
     }
 
     return (
-        <View style={tailwind('w-80')}>
+        <View style={tailwind("my-2")}>
             {/* <BrowserRouter>
                 <Link to={'/movies/' + _id} key={_id}> */}
-                    <View>
-                        <View>
-                            <Text>{title}</Text>
-                            <Text>{shortDesc()}</Text>
-                        </View>
+            <View style={tailwind("bg-white rounded-xl w-80 p-4")}>
+                <View>
+                    <Text style={tailwind("text-gray-900 text-xl font-bold")}>{title}</Text>
+                    <Text style={tailwind("mb-4")}>{shortDesc()}</Text>
+                </View>
 
-                        <View>
-                            <Text style={tailwind('text-red-500')}>Read More</Text>
-                        </View>
-                    </View>
-                {/* </Link>
+                <View>
+                    <Text style={tailwind("text-red-500")}>Read More</Text>
+                </View>
+            </View>
+            {/* </Link>
                  <Routes>
                      <Route path="/movies/:id" children={<MovieDetail />} />
                  </Routes>
