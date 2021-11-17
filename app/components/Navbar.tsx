@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { View, Text, Pressable } from 'react-native'
 import { Tooltip } from 'react-native-elements'
 

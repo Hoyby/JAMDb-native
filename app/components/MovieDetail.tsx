@@ -4,7 +4,7 @@ import MovieService from '../services/movieService'
 import { FindMovie_findMovie } from '../services/movieService/__generated__/FindMovie'
 import { Button, Overlay } from 'react-native-elements'
 import tailwind from 'tailwind-rn'
-import { Pressable, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
 
 /**
  * Provides information about a spesific movie
