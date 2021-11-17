@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react'
 import NavBar from './Navbar'
 import { Footer } from './Footer'
-import { ScrollView, SafeAreaView } from 'react-native'
+import { ScrollView, View } from 'react-native'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import tailwind from 'tailwind-rn'
 import styles from '../styles/global'
 
@@ -11,18 +12,20 @@ import styles from '../styles/global'
 
 export function Layout({ children }: { children: ReactNode }) {
     return (
-        <SafeAreaView style={styles.body}>
-            <NavBar />
-            <ScrollView style={tailwind('flex flex-col max-w-screen-xl my-0 px-10')}>
-                <ScrollView
-                    style={tailwind('flex-grow')}
-                    showsVerticalScrollIndicator={false}
-                    showsHorizontalScrollIndicator={false}
-                >
-                    {children}
-                </ScrollView>
-            </ScrollView>
-            <Footer />
-        </SafeAreaView>
+        <SafeAreaProvider>
+            <SafeAreaView style={styles.body}>
+                <NavBar />
+                <View style={tailwind('flex flex-col max-w-screen-xl my-0 px-10')}>
+                    <ScrollView
+                        style={tailwind('flex-grow')}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                    >
+                        {children}
+                    </ScrollView>
+                </View>
+                <Footer />
+            </SafeAreaView>
+        </SafeAreaProvider>
     )
 }

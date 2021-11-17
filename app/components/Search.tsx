@@ -169,7 +169,7 @@ export default function Search() {
     }, [])
 
     return (
-        <ScrollView style={tailwind('mb-40')}>
+        <View style={tailwind('mb-40')}>
             <View style={tailwind('my-10')}>
                 {/* Search Bar */}
                 <View style={tailwind('w-full relative h-12')}>
@@ -181,7 +181,7 @@ export default function Search() {
                         <Text>search</Text>
                     </View>
                     <TextInput
-                        onChangeText={text => handeSearchChange(text)}
+                        onChangeText={(text) => handeSearchChange(text)}
                         style={tailwind(
                             'w-full h-full text-gray-500 pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
                         )}
@@ -191,13 +191,11 @@ export default function Search() {
                 </View>
             </View>
             <View style={tailwind('relative flex flex-col mb-4 items-center')}>
-                <View>
-                </View>
-
-
+                <View></View>
             </View>
 
-            <ScrollView showsHorizontalScrollIndicator={false}
+            <ScrollView
+                showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={tailwind(
                     'max-w-screen-xl w-full h-full flex flex-row justify-between flex-wrap',
@@ -229,6 +227,6 @@ export default function Search() {
                     </Pressable>
                 )}
             </View>
-        </ScrollView>
+        </View>
     )
 }
