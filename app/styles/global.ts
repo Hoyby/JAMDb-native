@@ -1,10 +1,11 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform, StatusBar } from 'react-native'
 
 export default StyleSheet.create({
     body: {
         display: 'flex',
         flexDirection: 'column',
-        minHeight: window.innerHeight,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0, // status bar height
+        flex: 1, // fill all available space
         margin: '0%',
         padding: '0%',
         fontFamily:
