@@ -220,7 +220,7 @@ export default function Search() {
                         )}
                     />
                 </View>
-                <View>
+                <View style={{ marginLeft: "auto" }}>
                     <button style={tailwind("border-transparent text-white w-full rounded-lg bg-red-500 p-4")} onClick={() => setFilters({ ...filters, sortValue: -filters.sortValue })} >Sort by year published</button>
                 </View>
             </View>
