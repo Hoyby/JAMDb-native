@@ -6,16 +6,14 @@ import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
-import DropDownPicker from 'react-native-dropdown-picker'
 import tailwind from 'tailwind-rn'
 import { addTypenameToDocument } from '@apollo/client/utilities'
-import { Button, Input } from 'react-native-elements'
+import { Button, Input, ButtonGroup } from 'react-native-elements'
 
 // Redux dispatch
 const actionDispatch = (dispatch: Dispatch) => ({
     setSearchResult: (page: SearchMoviesPage['searchMoviesPage']) => dispatch(setSearchPage(page)),
 })
-
 export default function Search() {
     const movieService = new MovieService()
 
@@ -126,7 +124,6 @@ export default function Search() {
 
     const handleFilterChange = (text: string) => {
         clearTimeout(timer)
-        console.log(text)
         if (text != '') {
             timer = setTimeout(() => {
                 setFilters({
@@ -184,19 +181,8 @@ export default function Search() {
         })
     }, [])
 
-    const [open, setOpen] = useState(false)
-    const [value, setValue] = useState(null)
-    const [open2, setOpen2] = useState(false)
-    const [value2, setValue2] = useState(null)
-    const [items, setItems] = useState([
-        { label: 'Year Added', value: 'Year Added' },
-        { label: 'Year Published', value: 'Year Published' },
-    ])
-
-    const [items2, setItems2] = useState([
-        { label: 'Before', value: 'Before' },
-        { label: 'After', value: 'After' },
-    ])
+    const [FilterByIndex, setFilterByIndex] = useState(0)
+    const [BeforeOrAfterIndex, setBeforeOrAfterIndex] = useState(0)
 
     return (
         <View>
@@ -221,58 +207,55 @@ export default function Search() {
                 </View>
             </View>
             <View style={tailwind('flex flex-col')}>
-                <View style={tailwind('my-4')}>
-                    <DropDownPicker
-                        // https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/usage
-                        style={tailwind('mb-10 mr-40')}
-                        open={open}
-                        value={value}
-                        items={items}
-                        setOpen={setOpen}
-                        setValue={setValue}
-                        containerStyle={{ height: 40 }}
-                        setItems={setItems}
-                        onChangeValue={(value) => {
-                            if (value == 'Year Added') {
-                                setFilters({
-                                    ...filters,
-                                    filterField: 'createdAt',
-                                })
-                            } else {
+                <ButtonGroup
+                    containerStyle={tailwind('mb-10 mr-40')}
+                    selectedTextStyle={tailwind('')}
+                    selectedButtonStyle={tailwind('')}
+                    buttons={['Published', 'Created At']}
+                    selectedIndex={FilterByIndex}
+                    onPress={(value) => {
+                        switch (value) {
+                            case 0:
+                                setFilterByIndex(0)
                                 setFilters({
                                     ...filters,
                                     filterField: 'published',
                                 })
-                            }
-                        }}
-                    />
-                </View>
+                                break
+                            case 1:
+                                setFilterByIndex(1)
+                                setFilters({
+                                    ...filters,
+                                    filterField: 'createdAt',
+                                })
+                                break
+                        }
+                    }}
+                />
 
-                <View style={tailwind('my-4')}>
-                    <DropDownPicker
-                        style={tailwind('mb-10 mr-40')}
-                        open={open2}
-                        value={value2}
-                        items={items2}
-                        setOpen={setOpen2}
-                        setValue={setValue2}
-                        containerStyle={{ height: 40 }}
-                        setItems={setItems2}
-                        onChangeValue={(value) => {
-                            if (value == 'Before') {
+                <ButtonGroup
+                    containerStyle={tailwind('mb-10 mr-40')}
+                    buttons={['Before', 'After']}
+                    selectedIndex={BeforeOrAfterIndex}
+                    onPress={(value) => {
+                        switch (value) {
+                            case 0:
+                                setBeforeOrAfterIndex(0)
                                 setFilters({
                                     ...filters,
-                                    filterCond: '$lte',
+                                    filterField: '$lte',
                                 })
-                            } else {
+                                break
+                            case 1:
+                                setBeforeOrAfterIndex(1)
                                 setFilters({
                                     ...filters,
-                                    filterCond: '$gte',
+                                    filterField: '$gte',
                                 })
-                            }
-                        }}
-                    />
-                </View>
+                                break
+                        }
+                    }}
+                />
 
                 <View>
                     <Input
