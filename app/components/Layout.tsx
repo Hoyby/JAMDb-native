@@ -15,7 +15,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <SafeAreaProvider>
             <SafeAreaView style={styles.body}>
                 <NavBar />
-                <View style={tailwind('flex flex-col max-w-screen-xl my-0 px-10')}>
+                <View style={tailwind('flex flex-col max-w-screen-xl w-full my-0 px-5')}>
                     <ScrollView
                         style={tailwind('flex-grow')}
                         showsVerticalScrollIndicator={false}

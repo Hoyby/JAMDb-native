@@ -20,10 +20,10 @@ export default function NavBar() {
 
     return (
         <>
-            <View style={tailwind('flex justify-start items-start px-5')} data-testid="nav">
-                <View style={tailwind('container flex items-center justify-between')}>
+            <View style={tailwind('flex w-full max-w-screen-xl px-4')} data-testid="nav">
+                <View style={tailwind('flex items-center justify-between')}>
                     <View style={tailwind('w-full flex flex-row justify-between')}>
-                        <View style={tailwind('text-sm font-bold   mr-4  text-white')}>
+                        <View style={tailwind('text-sm font-bold mr-4 text-white')}>
                             <Text style={tailwind('text-red-600 text-2xl font-bold')}>JAMDb</Text>
                             <Text style={tailwind('opacity-25 m-0 p-0 text-white')}>
                                 Just Another Movie Database

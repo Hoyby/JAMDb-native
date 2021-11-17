@@ -7,6 +7,7 @@ import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
 import { TextInput, Pressable, View, Text, ScrollView } from 'react-native'
 import tailwind from 'tailwind-rn'
+import { Button } from 'react-native-elements'
 
 // Redux dispatch
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -169,7 +170,7 @@ export default function Search() {
     }, [])
 
     return (
-        <View style={tailwind('mb-40')}>
+        <View>
             <View style={tailwind('my-10')}>
                 {/* Search Bar */}
                 <View style={tailwind('w-full relative h-12')}>
@@ -198,35 +199,35 @@ export default function Search() {
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={tailwind(
-                    'max-w-screen-xl w-full h-full flex flex-row justify-between flex-wrap',
+                    'max-w-screen-xl w-full justify-between flex-wrap mb-10',
                 )}
             >
-                {searchResult &&
-                    searchResult.map((movie) => (
-                        <MovieCard
-                            title={movie?.title}
-                            description={movie?.description}
-                            _id={movie?._id}
-                            key={movie._id}
-                        />
-                    ))}
-            </ScrollView>
+                <View style={tailwind('w-full flex flex-row justify-around flex-wrap mb-10')}>
+                    {searchResult &&
+                        searchResult.map((movie) => (
+                            <MovieCard
+                                title={movie?.title}
+                                description={movie?.description}
+                                _id={movie?._id}
+                                key={movie._id}
+                            />
+                        ))}
+                </View>
 
-            <View>
                 {!pageState.hasNextPage && (
-                    <Pressable
-                        style={tailwind('')}
-                        onPress={() =>
-                            setPageState({
-                                ...pageState,
-                                page: pageState.page + 1,
-                            })
-                        }
-                    >
-                        <Text>Show more ...</Text>
-                    </Pressable>
+                    <View style={tailwind('h-24')}>
+                        <Button
+                            onPress={() =>
+                                setPageState({
+                                    ...pageState,
+                                    page: pageState.page + 1,
+                                })
+                            }
+                            title="Load More"
+                        ></Button>
+                    </View>
                 )}
-            </View>
+            </ScrollView>
         </View>
     )
 }
