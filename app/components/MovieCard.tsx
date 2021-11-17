@@ -1,7 +1,6 @@
 import React from 'react'
 import MovieDetail from './MovieDetail'
-import { Link, Route } from 'react-router-native'
-import { Routes, BrowserRouter } from 'react-router-dom'
+import { Link, NativeRouter, Route, Routes } from 'react-router-native'
 import { View, Text } from 'react-native'
 import tailwind from 'tailwind-rn'
 
@@ -23,24 +22,24 @@ export function MovieCard({ title, description, _id }: IMovieCard) {
     }
 
     return (
-        <View style={tailwind("my-2")}>
-            {/* <BrowserRouter>
-                <Link to={'/movies/' + _id} key={_id}> */}
-            <View style={tailwind("bg-white rounded-xl w-80 p-4")}>
-                <View>
-                    <Text style={tailwind("text-gray-900 text-xl font-bold")}>{title}</Text>
-                    <Text style={tailwind("mb-4")}>{shortDesc()}</Text>
-                </View>
+        <View style={tailwind('my-2')}>
+            <NativeRouter>
+                <Link to={'/movies/' + _id} key={_id}>
+                    <View style={tailwind('bg-white rounded-xl w-80 p-4')}>
+                        <View>
+                            <Text style={tailwind('text-gray-900 text-xl font-bold')}>{title}</Text>
+                            <Text style={tailwind('mb-4')}>{shortDesc()}</Text>
+                        </View>
 
-                <View>
-                    <Text style={tailwind("text-red-500")}>Read More</Text>
-                </View>
-            </View>
-            {/* </Link>
-                 <Routes>
-                     <Route path="/movies/:id" children={<MovieDetail />} />
-                 </Routes>
-            </BrowserRouter> */}
+                        <View>
+                            <Text style={tailwind('text-red-500')}>Read More</Text>
+                        </View>
+                    </View>
+                </Link>
+                <Routes>
+                    <Route path={'/movies/:id'} element={<MovieDetail />} />
+                </Routes>
+            </NativeRouter>
         </View>
     )
 }

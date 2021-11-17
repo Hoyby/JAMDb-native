@@ -2,6 +2,7 @@ import React, { SetStateAction, useEffect, useState } from 'react'
 import { Link, useParams, Navigate } from 'react-router-native'
 import MovieService from '../services/movieService'
 import { FindMovie_findMovie } from '../services/movieService/__generated__/FindMovie'
+import { Overlay } from 'react-native-elements'
 import tailwind from 'tailwind-rn'
 import { Pressable, View, Text } from 'react-native'
 
@@ -33,27 +34,30 @@ export default function MovieDetail() {
     }
 
     return (
-        <View>
+        <Overlay isVisible={true}>
             <View>
-                {movie?.title || 'Could not get name'}
+                <Text>{movie?.title || 'Could not get name'}</Text>
             </View>
 
             <View>
-                <Text style={tailwind('text-base text-gray-600 font-light mb-10')}>
-                    Released: {movie?.published}
+                {movie?.published && (
+                    <Text style={tailwind('text-base text-gray-600 font-light mb-10')}>
+                        Released: {movie?.published}
+                    </Text>
+                )}
+
+                <Text style={tailwind('text-base text-gray-600 font-normal')}>
+                    {movie?.description}
                 </Text>
-                <Text style={tailwind('text-base text-gray-600 font-normal')}>{movie?.description}</Text>
             </View>
 
             <View>
                 <Link to={'/'}>
-                    <Pressable
-                        onPress={() => setShowModal(false)}
-                    >
+                    <Pressable onPress={() => setShowModal(false)}>
                         <Text>Close</Text>
                     </Pressable>
                 </Link>
             </View>
-        </View>
+        </Overlay>
     )
 }
