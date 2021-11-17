@@ -5,14 +5,14 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
-import { View, Text, TextInput, Pressable, ScrollView } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import tailwind from 'tailwind-rn'
+import { Button, Input, ButtonGroup } from 'react-native-elements'
 
 // Redux dispatch
 const actionDispatch = (dispatch: Dispatch) => ({
     setSearchResult: (page: SearchMoviesPage['searchMoviesPage']) => dispatch(setSearchPage(page)),
 })
-
 export default function Search() {
     const movieService = new MovieService()
 
@@ -108,16 +108,29 @@ export default function Search() {
             })
     }
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-    }
-
     let timer: NodeJS.Timeout
 
     const handeSearchChange = (text: string) => {
         clearTimeout(timer)
         timer = setTimeout(() => {
             setSearchInput(text)
+        }, 700)
+    }
+
+    const handleFilterChange = (text: string) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            if (isNaN(Number(text)) || text.length == 0) {
+                setFilters({
+                    ...filters,
+                    filterValue: 2000,
+                })
+            } else {
+                setFilters({
+                    ...filters,
+                    filterValue: parseInt(text),
+                })
+            }
         }, 700)
     }
 
@@ -168,95 +181,129 @@ export default function Search() {
         })
     }, [])
 
+    const [FilterByIndex, setFilterByIndex] = useState(0)
+    const [BeforeOrAfterIndex, setBeforeOrAfterIndex] = useState(0)
+
     return (
-        <ScrollView style={tailwind('mb-40')}>
+        <View>
             <View style={tailwind('my-10')}>
                 {/* Search Bar */}
                 <View style={tailwind('w-full relative h-12')}>
-                    <View
+                    <Input
+                        onChangeText={(text) => handeSearchChange(text)}
+                        placeholder="Search..."
                         style={tailwind(
-                            'p-0 text-gray-600 text-opacity-60 absolute top-1/2 right-3 text-xl',
-                        )}
-                    >
-                        <Text>search</Text>
-                    </View>
-                    <TextInput
-                        onChangeText={text => handeSearchChange(text)}
-                        style={tailwind(
-                            'w-full h-full text-gray-500 pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
+                            'w-full h-full text-white pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
                         )}
                     />
-
-                    <Text>Search Movies</Text>
                 </View>
             </View>
-            <View style={tailwind('relative flex flex-row mb-4 items-center')}>
-                <View>
-                    <select
-                        style={tailwind("border rounded-lg border-2 border-red-700 p-4 bg-transparent appearance-none form-select block w-full")}
-                        onChange={(e: React.ChangeEvent) => setFilters({ ...filters, filterField: e.target.nodeValue ? e.target.nodeValue : '' })}
-                    >
-                        <option value="createdAt">Year added</option>
-                        <option value="published">Year published</option>
-                    </select>
-                </View>
 
-                <View style={tailwind("mx-4")}>
-                    <select
-                        style={tailwind("border rounded-lg border-2 border-yellow-300 p-4 bg-transparent appearance-none form-select block w-full")}
-                        onChange={(e: React.ChangeEvent) => setFilters({ ...filters, filterField: e.target.nodeValue ? e.target.nodeValue : '' })}
-                    >
-                        <option value="$lte">Before</option>
-                        <option value="$gte">After</option>
-                    </select>
+            <View style={tailwind('flex flex-col')}>
+                <ButtonGroup
+                    containerStyle={tailwind('mb-4')}
+                    selectedTextStyle={tailwind('')}
+                    selectedButtonStyle={tailwind('')}
+                    buttons={['Published', 'Created At']}
+                    selectedIndex={FilterByIndex}
+                    onPress={(value) => {
+                        switch (value) {
+                            case 0:
+                                setFilterByIndex(0)
+                                setFilters({
+                                    ...filters,
+                                    filterField: 'published',
+                                })
+                                break
+                            case 1:
+                                setFilterByIndex(1)
+                                setFilters({
+                                    ...filters,
+                                    filterField: 'createdAt',
+                                })
+                                break
+                        }
+                    }}
+                />
 
-                </View>
+                <ButtonGroup
+                    containerStyle={tailwind('mb-4')}
+                    buttons={['Before', 'After']}
+                    selectedIndex={BeforeOrAfterIndex}
+                    onPress={(value) => {
+                        switch (value) {
+                            case 0:
+                                setBeforeOrAfterIndex(0)
+                                setFilters({
+                                    ...filters,
+                                    filterField: '$lte',
+                                })
+                                break
+                            case 1:
+                                setBeforeOrAfterIndex(1)
+                                setFilters({
+                                    ...filters,
+                                    filterField: '$gte',
+                                })
+                                break
+                        }
+                    }}
+                />
+
                 <View>
-                    <TextInput
-                        onChangeText={(e: string) => setFilters({ ...filters, filterValue: e ? Number(e) : initialFilters.filterValue })}
-                        placeholder={filters.filterValue.toString()}
+                    <Input
                         style={tailwind(
-                            'w-20 h-full text-gray-500 p-4 border border-gray-300 rounded-lg',
+                            'w-full text-white pl-3 pr-9 pt-3.5 pb-2.5 mb-4 border border-gray-300 rounded-lg',
                         )}
+                        placeholder={filters.filterValue.toString()}
+                        onChangeText={(text) => handleFilterChange(text)}
                     />
                 </View>
-                <View style={{ marginLeft: "auto" }}>
-                    <button style={tailwind("border-transparent text-white w-full rounded-lg bg-red-500 p-4")} onClick={() => setFilters({ ...filters, sortValue: -filters.sortValue })} >Sort by year published</button>
-                </View>
+
+                <Button
+                    title={'Sort by year published'}
+                    onPress={() =>
+                        setFilters({
+                            ...filters,
+                            sortValue: -filters.sortValue,
+                        })
+                    }
+                ></Button>
             </View>
 
             <ScrollView
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
                 contentContainerStyle={tailwind(
-                    'max-w-screen-xl w-full h-full flex justify-between flex-wrap mb-10',
+                    'max-w-screen-xl w-full justify-between flex-wrap mb-10',
                 )}
             >
-                {searchResult &&
-                    searchResult.map((movie) => (
-                        <ScrollView style={tailwind('')} key={movie?._id}>
+                <View style={tailwind('w-full flex flex-row justify-around flex-wrap mb-10')}>
+                    {searchResult &&
+                        searchResult.map((movie) => (
                             <MovieCard
                                 title={movie?.title}
                                 description={movie?.description}
                                 _id={movie?._id}
+                                key={movie._id}
                             />
-                        </ScrollView>
-                    ))}
-            </ScrollView>
+                        ))}
+                </View>
 
-            <View style={tailwind('')}>
                 {!pageState.hasNextPage && (
-                    <Pressable
-                        style={tailwind('')}
-                        onPress={() =>
-                            setPageState({
-                                ...pageState,
-                                page: pageState.page + 1,
-                            })
-                        }
-                    >
-                        <Text>Show more ...</Text>
-                    </Pressable>
+                    <View style={tailwind('h-24')}>
+                        <Button
+                            onPress={() =>
+                                setPageState({
+                                    ...pageState,
+                                    page: pageState.page + 1,
+                                })
+                            }
+                            title="Load More"
+                        ></Button>
+                    </View>
                 )}
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </View>
     )
 }
