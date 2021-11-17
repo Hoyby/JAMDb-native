@@ -114,7 +114,7 @@ export default function Search() {
 
     let timer: NodeJS.Timeout
 
-    const handeSearchChange = (text:string) => {
+    const handeSearchChange = (text: string) => {
         clearTimeout(timer)
         timer = setTimeout(() => {
             setSearchInput(text)
@@ -186,121 +186,43 @@ export default function Search() {
                             'w-full h-full text-gray-500 pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
                         )}
                     />
-                    
-                        <Text>Search Movies</Text>
+
+                    <Text>Search Movies</Text>
                 </View>
             </View>
-            <View style={tailwind('relative flex flex-col mb-4 items-center')}>
+            <View style={tailwind('relative flex flex-row mb-4 items-center')}>
                 <View>
-                    {/* <Dropdown
-                        color="red"
-                        style={tailwind('whitespace-nowrap')}
-                        buttonText={
-                            filters.filterField == 'published' ? 'Year Published' : 'Year Added'
-                        }
-                        buttonType="outline"
-                        size="sm"
-                        ripple="dark"
+                    <select
+                        style={tailwind("border rounded-lg border-2 border-red-700 p-4 bg-transparent appearance-none form-select block w-full")}
+                        onChange={(e: React.ChangeEvent) => setFilters({ ...filters, filterField: e.target.nodeValue ? e.target.nodeValue : '' })}
                     >
-                        <DropdownLink
-                            href="#"
-                            color="red"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterField: 'createdAt',
-                                })
-                            }
-                        >
-                            Year Added
-                        </DropdownLink>
-                        <DropdownLink
-                            href="#"
-                            color="red"
-                            size="sm"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterField: 'published',
-                                })
-                            }
-                        >
-                            Year Published
-                        </DropdownLink>
-                    </Dropdown> */}
+                        <option value="createdAt">Year added</option>
+                        <option value="published">Year published</option>
+                    </select>
                 </View>
 
-                {/* <View>
-                    <Dropdown
-                        color="yellow"
-                        buttonText={filters.filterCond == '$lte' ? 'Before' : 'After'}
-                        buttonType="outline"
-                        size="sm"
-                        ripple="dark"
+                <View style={tailwind("mx-4")}>
+                    <select
+                        style={tailwind("border rounded-lg border-2 border-yellow-300 p-4 bg-transparent appearance-none form-select block w-full")}
+                        onChange={(e: React.ChangeEvent) => setFilters({ ...filters, filterField: e.target.nodeValue ? e.target.nodeValue : '' })}
                     >
-                        <DropdownLink
-                            href="#"
-                            color="yellow"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterCond: '$lte',
-                                })
-                            }
-                        >
-                            Before
-                        </DropdownLink>
-                        <DropdownLink
-                            href="#"
-                            color="yellow"
-                            ripple="light"
-                            onClick={() =>
-                                setFilters({
-                                    ...filters,
-                                    filterCond: '$gte',
-                                })
-                            }
-                        >
-                            After
-                        </DropdownLink>
-                    </Dropdown>
-                </View> */}
+                        <option value="$lte">Before</option>
+                        <option value="$gte">After</option>
+                    </select>
 
-                {/* <View>
+                </View>
+                <View>
                     <TextInput
-                        style={tailwind(
-                            'h-full text-gray-200 overflow-visible pl-3 pr-3 py-2.5 text-sm border-gray-300 border  rounded-lg',
-                        )}
+                        onChangeText={(e: string) => setFilters({ ...filters, filterValue: e ? Number(e) : initialFilters.filterValue })}
                         placeholder={filters.filterValue.toString()}
-                        onChangeText={(e:any) =>
-                            setFilters({
-                                ...filters,
-                                filterValue: parseInt(e.target.value),
-                            })
-                        }
+                        style={tailwind(
+                            'w-20 h-full text-gray-500 p-4 border border-gray-300 rounded-lg',
+                        )}
                     />
-                </View> */}
-                {/* <Button
-                    size="sm"
-                    style={tailwind('whitespace-nowrap')}
-                    ripple="light"
-                    color="red"
-                    onClick={() =>
-                        setFilters({
-                            ...filters,
-                            sortValue: -filters.sortValue,
-                        })
-                    }
-                >
-                    <Icon
-                        name={filters.sortValue === -1 ? 'arrow_upward' : 'arrow_downward'}
-                        size="sm"
-                    />{' '}
-                    Sort by year published
-                </Button> */}
+                </View>
+                <View style={{ marginLeft: "auto" }}>
+                    <button style={tailwind("border-transparent text-white w-full rounded-lg bg-red-500 p-4")} onClick={() => setFilters({ ...filters, sortValue: -filters.sortValue })} >Sort by year published</button>
+                </View>
             </View>
 
             <ScrollView
