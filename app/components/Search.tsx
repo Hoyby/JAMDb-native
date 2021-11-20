@@ -7,6 +7,7 @@ import { SearchMoviesPage } from '../services/movieService/__generated__/SearchM
 import { View } from 'react-native'
 import tailwind from 'tailwind-rn'
 import { Button, Input, ButtonGroup } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 import MovieList, { IPageState } from './MovieList'
 
 // Redux dispatch
@@ -188,7 +189,12 @@ export default function Search() {
                 <View style={tailwind('w-full relative h-12')}>
                     <Input
                         onChangeText={(text: string) => handeSearchChange(text)}
-                        placeholder="Search..."
+                        placeholder={"Search..."}
+                        rightIcon={{
+                            name: 'search',
+                            type: 'AntDesign',
+                            color: '#F2C94C'
+                        }}
                         style={tailwind(
                             'w-full h-full text-white pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
                         )}
@@ -252,9 +258,14 @@ export default function Search() {
                         style={tailwind(
                             'w-full text-white pl-3 pr-9 pt-3.5 pb-2.5 mb-4 border border-gray-300 rounded-lg',
                         )}
-                        placeholder={filters.filterValue.toString()}
+                        //placeholder={filters.filterValue.toString()}
                         onChangeText={(text) => handleFilterChange(text)}
-                    />
+                        rightIcon={{
+                            name: 'filter',
+                            type: 'AntDesign',
+                            color: '#F2C94C'
+                        }}
+                    >2000</Input>
                 </View>
 
                 <Button
