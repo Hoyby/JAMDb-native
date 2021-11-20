@@ -33,7 +33,7 @@ export default function Search() {
     }
 
     const initialPageState: IPageState = {
-        hasNextPage: false,
+        hasNextPage: true,
         page: PAGE_OFFSET,
     }
 
@@ -102,7 +102,7 @@ export default function Search() {
         if (queryResult?.length == 0)
             setPageState({
                 ...pageState,
-                hasNextPage: true,
+                hasNextPage: false,
             })
     }
 
@@ -140,7 +140,7 @@ export default function Search() {
         })
         setPageState({
             ...pageState,
-            hasNextPage: false,
+            hasNextPage: true,
         })
         fetchSearchResults().catch((err) => {
             console.error(err)
@@ -158,7 +158,7 @@ export default function Search() {
     useEffect(() => {
         setPageState({
             ...pageState,
-            hasNextPage: false,
+            hasNextPage: true,
         })
         if (pageState.page != PAGE_OFFSET) {
             fetchMore().catch((err) => {
@@ -233,14 +233,14 @@ export default function Search() {
                                 setBeforeOrAfterIndex(0)
                                 setFilters({
                                     ...filters,
-                                    filterField: '$lte',
+                                    filterCond: '$lte',
                                 })
                                 break
                             case 1:
                                 setBeforeOrAfterIndex(1)
                                 setFilters({
                                     ...filters,
-                                    filterField: '$gte',
+                                    filterCond: '$gte',
                                 })
                                 break
                         }

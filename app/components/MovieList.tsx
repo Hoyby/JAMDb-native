@@ -39,7 +39,7 @@ export default function MovieList({ searchResult, pageState, setPageState }: IMo
           ))}
       </View>
 
-      {!pageState.hasNextPage && (
+      {pageState.hasNextPage && (
         <View style={tailwind('h-24')}>
           <Button
             onPress={() =>
