@@ -116,20 +116,17 @@ export default function Search() {
     }
 
     const handleFilterChange = (text: string) => {
-        clearTimeout(timer)
-        timer = setTimeout(() => {
-            if (isNaN(Number(text)) || text.length == 0) {
-                setFilters({
-                    ...filters,
-                    filterValue: 2000,
-                })
-            } else {
-                setFilters({
-                    ...filters,
-                    filterValue: parseInt(text),
-                })
-            }
-        }, 700)
+        if (isNaN(Number(text)) || text.length == 0) {
+            setFilters({
+                ...filters,
+                filterValue: 2000,
+            })
+        } else {
+            setFilters({
+                ...filters,
+                filterValue: parseInt(text),
+            })
+        }
     }
 
     // searchResult state is cleared and fetched when user input changes
@@ -252,9 +249,8 @@ export default function Search() {
                         style={tailwind(
                             'w-full text-white pl-3 pr-9 pt-3.5 pb-2.5 mb-4 border border-gray-300 rounded-lg',
                         )}
-                        //placeholder={filters.filterValue.toString()}
                         placeholder={filters.filterValue.toString()}
-                        onChangeText={(text) => handleFilterChange(text)}
+                        //onChangeText={(text) => handleFilterChange(text)}
                         onSubmitEditing={({ nativeEvent: { text }}) => handleFilterChange(text)}
                         keyboardType={'number-pad'}
                         maxLength={4}
