@@ -33,7 +33,7 @@ export default function Search() {
     }
 
     const initialPageState: IPageState = {
-        hasNextPage: false,
+        hasNextPage: true,
         page: PAGE_OFFSET,
     }
 
@@ -102,7 +102,7 @@ export default function Search() {
         if (queryResult?.length == 0)
             setPageState({
                 ...pageState,
-                hasNextPage: true,
+                hasNextPage: false,
             })
     }
 
@@ -116,20 +116,17 @@ export default function Search() {
     }
 
     const handleFilterChange = (text: string) => {
-        clearTimeout(timer)
-        timer = setTimeout(() => {
-            if (isNaN(Number(text)) || text.length == 0) {
-                setFilters({
-                    ...filters,
-                    filterValue: 2000,
-                })
-            } else {
-                setFilters({
-                    ...filters,
-                    filterValue: parseInt(text),
-                })
-            }
-        }, 700)
+        if (isNaN(Number(text)) || text.length == 0) {
+            setFilters({
+                ...filters,
+                filterValue: 2000,
+            })
+        } else {
+            setFilters({
+                ...filters,
+                filterValue: parseInt(text),
+            })
+        }
     }
 
     // searchResult state is cleared and fetched when user input changes
@@ -140,7 +137,7 @@ export default function Search() {
         })
         setPageState({
             ...pageState,
-            hasNextPage: false,
+            hasNextPage: true,
         })
         fetchSearchResults().catch((err) => {
             console.error(err)
@@ -158,7 +155,7 @@ export default function Search() {
     useEffect(() => {
         setPageState({
             ...pageState,
-            hasNextPage: false,
+            hasNextPage: true,
         })
         if (pageState.page != PAGE_OFFSET) {
             fetchMore().catch((err) => {
@@ -188,7 +185,7 @@ export default function Search() {
                 <View style={tailwind('w-full relative h-12')}>
                     <Input
                         onChangeText={(text: string) => handeSearchChange(text)}
-                        placeholder="Search..."
+                        placeholder={"Search..."}
                         style={tailwind(
                             'w-full h-full text-white pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
                         )}
@@ -233,14 +230,14 @@ export default function Search() {
                                 setBeforeOrAfterIndex(0)
                                 setFilters({
                                     ...filters,
-                                    filterField: '$lte',
+                                    filterCond: '$lte',
                                 })
                                 break
                             case 1:
                                 setBeforeOrAfterIndex(1)
                                 setFilters({
                                     ...filters,
-                                    filterField: '$gte',
+                                    filterCond: '$gte',
                                 })
                                 break
                         }
@@ -253,7 +250,10 @@ export default function Search() {
                             'w-full text-white pl-3 pr-9 pt-3.5 pb-2.5 mb-4 border border-gray-300 rounded-lg',
                         )}
                         placeholder={filters.filterValue.toString()}
-                        onChangeText={(text) => handleFilterChange(text)}
+                        //onChangeText={(text) => handleFilterChange(text)}
+                        onSubmitEditing={({ nativeEvent: { text }}) => handleFilterChange(text)}
+                        keyboardType={'number-pad'}
+                        maxLength={4}
                     />
                 </View>
 
