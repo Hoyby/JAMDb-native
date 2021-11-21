@@ -5,7 +5,6 @@ import Dashboard from './app/components/Dashboard'
 import { Layout } from './app/components/Layout'
 import { apolloClient } from './app/graphql'
 import { store } from './app/store'
-import { View } from 'react-native'
 
 export default function App() {
     return (
