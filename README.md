@@ -42,11 +42,12 @@ You can also view it on your web browser with
     │   ├── components      # Custom React Components
     │   ├── grapql          # GraphQL config
     │   ├── services        # API service directory
-    │   │   ├── slices          # Redux slices
-    │   │   ├── hooks.ts        # React hooks
-    │   │      └── store.ts        # Redux store config
-    │   │
-    |   └── styles          # Styles directroy
+    │   ├── slices          # Redux slices
+    │   ├── styles          # Styles directory
+    │   ├── utils           # React hooks
+    │   ├── hooks.ts        # React hooks
+    │   └── store.ts        # Redux store config
+    └── assets
 
 # Application
 
@@ -73,3 +74,12 @@ We chose to use Tailwind because:
 [Redux Toolkit](https://redux-toolkit.js.org/) is a wrapper around the traditional redux implementation designed to make the initial setup process easier, decrease boilerplate code, and improve readability.
 
 Our app stores the result of a search in state.
+
+
+## Testing
+
+In project we have chosen not to implement unit- or end-to-end testing, as we have already implemented this in the previous project. 
+
+We performed user-testing on iOS and Android phones.
+
+
