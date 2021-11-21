@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import MovieService from '../services/movieService'
-import { MovieCard } from './MovieCard'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { Dispatch } from '@reduxjs/toolkit'
 import { setSearchPage } from '../slices/searchPageSlice'
 import { SearchMoviesPage } from '../services/movieService/__generated__/SearchMoviesPage'
-import { View, ScrollView } from 'react-native'
+import { View } from 'react-native'
 import tailwind from 'tailwind-rn'
 import { Button, Input, ButtonGroup } from 'react-native-elements'
+import MovieList, { IPageState } from './MovieList'
 
 // Redux dispatch
 const actionDispatch = (dispatch: Dispatch) => ({
     setSearchResult: (page: SearchMoviesPage['searchMoviesPage']) => dispatch(setSearchPage(page)),
 })
+
 export default function Search() {
     const movieService = new MovieService()
 
@@ -31,10 +32,7 @@ export default function Search() {
         sortValue: -1,
     }
 
-    const initialPageState: {
-        hasNextPage: boolean // weather or not there may be a next page
-        page: number // current page number
-    } = {
+    const initialPageState: IPageState = {
         hasNextPage: false,
         page: PAGE_OFFSET,
     }
@@ -172,13 +170,12 @@ export default function Search() {
 
     // Fetches movies on component initialization
     useEffect(() => {
-        async function search() {
-            await fetchSearchResults()
-        }
-        search().catch((err: Error) => {
-            console.error(err.message)
-            throw err
-        })
+
+        (async () => fetchSearchResults())()
+            .catch((err: Error) => {
+                console.error(err.message)
+                throw err
+            })
     }, [])
 
     const [FilterByIndex, setFilterByIndex] = useState(0)
@@ -190,7 +187,7 @@ export default function Search() {
                 {/* Search Bar */}
                 <View style={tailwind('w-full relative h-12')}>
                     <Input
-                        onChangeText={(text) => handeSearchChange(text)}
+                        onChangeText={(text: string) => handeSearchChange(text)}
                         placeholder="Search..."
                         style={tailwind(
                             'w-full h-full text-white pl-3 pr-9 pt-3.5 pb-2.5 border border-gray-300 rounded-lg',
@@ -270,40 +267,8 @@ export default function Search() {
                     }
                 ></Button>
             </View>
+            <MovieList pageState={pageState} searchResult={searchResult} setPageState={useCallback(setPageState, [])} />
 
-            <ScrollView
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={tailwind(
-                    'max-w-screen-xl w-full justify-between flex-wrap mb-10',
-                )}
-            >
-                <View style={tailwind('w-full flex flex-row justify-around flex-wrap mb-10')}>
-                    {searchResult &&
-                        searchResult.map((movie) => (
-                            <MovieCard
-                                title={movie?.title}
-                                description={movie?.description}
-                                _id={movie?._id}
-                                key={movie._id}
-                            />
-                        ))}
-                </View>
-
-                {!pageState.hasNextPage && (
-                    <View style={tailwind('h-24')}>
-                        <Button
-                            onPress={() =>
-                                setPageState({
-                                    ...pageState,
-                                    page: pageState.page + 1,
-                                })
-                            }
-                            title="Load More"
-                        ></Button>
-                    </View>
-                )}
-            </ScrollView>
         </View>
     )
 }
